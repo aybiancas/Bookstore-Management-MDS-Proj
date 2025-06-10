@@ -1,0 +1,82 @@
+{% extends "index.html" %}
+{% block content %}
+<!--{% block extra_css %}-->
+<!--<head>-->
+<!--  {% load static %}-->
+<!--  <link rel="stylesheet" href="{% static 'css/products.css' %}" type="text/css">-->
+<!--</head>-->
+<!--{% endblock %}-->
+
+<h1 class="page-title">Produse</h1>
+
+<div class="form-wrapper">
+    <div class="form-card">
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.book.label_tag }}
+                {{ form.book|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+                {{ form.stock.label_tag }}
+                {{ form.stock|add_class:"form-control" }}
+            </div>
+            <button type="submit" class="btn-primary">Adauga Stoc</button>
+        </form>
+    </div>
+
+    <div class="form-card">
+        <form method="post" action="{% url 'add_book' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ book_form.title.label_tag }}
+                {{ book_form.title|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+                {{ book_form.authors.label_tag }}
+                {{ book_form.authors|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+                {{ book_form.category.label_tag }}
+                {{ book_form.category|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+                {{ book_form.isbn.label_tag }}
+                {{ book_form.isbn|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+                {{ book_form.price.label_tag }}
+                {{ book_form.price|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+                {{ book_form.stock.label_tag }}
+                {{ book_form.stock|add_class:"form-control" }}
+            </div>
+            <button type="submit" class="btn-primary">Adauga Carte</button>
+        </form>
+    </div>
+</div>
+
+<table class="styled-table enhanced-table">
+    <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th>Titlu</th>
+          <th>Autor</th>
+          <th>Categorie</th>
+          <th>In stoc</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+        <tr>
+            <th scope="row">{{ book.id }}</th>
+            <td>{{ book.title }}</td>
+            <td>{{ book.authors|join:", " }}</td>
+            <td>{{ book.category.name }}</td>
+            <td>{{ book.stock }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
